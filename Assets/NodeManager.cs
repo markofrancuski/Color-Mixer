@@ -58,6 +58,25 @@ public class NodeManager : MonoBehaviour
 
     private void OnNodeClicked(Node node)
     {
+        /// TODO: Create Enum and use node.NodeType to check
+        OutputNode outputNode = node as OutputNode;
+        MixingNode mixingNode = node as MixingNode;
+
+        if(!this._clickedNode)
+        {
+            if (outputNode)
+            {
+                Debug.Log("Clicked On Output Node");
+                return;
+            }
+
+            if(mixingNode && mixingNode.InputColors <= 0)
+            {
+                Debug.Log("Clicked On Mixing Node and input colors are NULL");
+                return;
+            }
+        }
+
         this._clickedNode = node;
 
         _connectorObject = Instantiate(_connectorPrefab);
@@ -71,6 +90,13 @@ public class NodeManager : MonoBehaviour
 
     private void OnMouseRelease()
     {
+        /// TODO: Perform checks here as well.
+        if (!_clickedNode)
+        {
+            Debug.Log("ret");
+            return;
+        }
+
         // Ray cast down to see the if we can connect to the node.
         RaycastHit2D hit;
 
@@ -86,6 +112,12 @@ public class NodeManager : MonoBehaviour
             Node node = hit.collider.gameObject.GetComponent<Node>();
 
             node.SetColor(_clickedNode.NodeColor);
+
+            Vector3 scale = NodeConnectionScale(node, _clickedPosition.position);
+
+            _connectorObject.transform.localScale = scale;
+
+
             _connectorsList.Add(connector);
         }
         else
@@ -97,6 +129,16 @@ public class NodeManager : MonoBehaviour
         this._clickedPosition = null;
         this._clickedNode = null;
     }
+
+    private Vector3 NodeConnectionScale(Node node, Vector3 position)
+    {
+        Vector3 direction = node.transform.position - position;
+
+        Vector3 scale = _connectorObject.transform.localScale;
+        scale.x = -direction.x;
+        return scale;
+    }
+
     private void CheckAllOutputNodes()
     {
         foreach (OutputNode node in _outputNodes)

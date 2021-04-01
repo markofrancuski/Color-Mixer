@@ -7,6 +7,8 @@ public class MixingNode : Node
     [SerializeField] private Queue<Color> _inputColors = new Queue<Color>();
     [SerializeField] private List<Color> _inputColorsList = new List<Color>();
 
+    public int InputColors => _inputColors.Count;
+
     public override void SetColor(Color color)
     {
         _nodeColor = color;

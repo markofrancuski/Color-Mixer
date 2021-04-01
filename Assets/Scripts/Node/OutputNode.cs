@@ -18,7 +18,7 @@ public class OutputNode : Node
         _desiredColor = Renderer.color;
     }
 
-    public void SetColor(Color color)
+    public override void SetColor(Color color)
     {
         _nodeColor = color;
 
