@@ -26,8 +26,6 @@ public class Node : MonoBehaviour
 
     public virtual void SetColor(Color color)
     {
-
+      
     }
-
-
 }

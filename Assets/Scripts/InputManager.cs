@@ -8,8 +8,6 @@ public class InputManager : MonoBehaviour
 
     [SerializeField] private bool _isClicked;
 
-
-
     private void Update()
     {
 

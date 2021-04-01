@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputNode : Node
+public class InputNode : Node 
 {
     protected override void Start()
     {
